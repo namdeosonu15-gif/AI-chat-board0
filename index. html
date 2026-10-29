@@ -1,0 +1,544 @@
+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
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>I Chat Wood</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1020;
+  color: #fff;
+}
+
+.app {
+  width: 100%;
+  max-width: 900px;
+  height: 100dvh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  background: #101729;
+}
+
+header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #151f35;
+  border-bottom: 1px solid #293750;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  font-size: 24px;
+  background: linear-gradient(135deg, #4776ff, #a855f7);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.status {
+  font-size: 11px;
+  color: #65e6a1;
+  margin-top: 5px;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #293954;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .5;
+}
+
+#newChat {
+  background: #344f9c;
+}
+
+#chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  scroll-behavior: smooth;
+}
+
+.welcome {
+  margin: auto;
+  max-width: 500px;
+  text-align: center;
+  padding: 25px 12px;
+}
+
+.welcome-icon {
+  font-size: 58px;
+}
+
+.welcome h2 {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.welcome p {
+  color: #aab8d2;
+  line-height: 1.7;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.suggestions button {
+  border: 1px solid #344563;
+  background: #19253a;
+}
+
+.message {
+  max-width: 90%;
+  padding: 13px 15px;
+  border-radius: 15px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.user {
+  align-self: flex-end;
+  background: #3459c9;
+}
+
+.ai {
+  align-self: flex-start;
+  background: #202d43;
+  border: 1px solid #30415c;
+}
+
+.message-label {
+  font-size: 11px;
+  opacity: .75;
+  margin-bottom: 6px;
+}
+
+.message-text {
+  white-space: pre-wrap;
+}
+
+.copy-btn {
+  margin-top: 10px;
+  font-size: 12px;
+  padding: 7px 10px;
+}
+
+footer {
+  padding: 12px;
+  background: #151f35;
+  border-top: 1px solid #293750;
+}
+
+.input-box {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 7px;
+  background: #202d43;
+  border: 1px solid #394b69;
+  border-radius: 15px;
+}
+
+textarea {
+  flex: 1;
+  min-width: 0;
+  resize: none;
+  max-height: 140px;
+  border: none;
+  outline: none;
+  padding: 10px 5px;
+  font: inherit;
+  color: white;
+  background: transparent;
+}
+
+textarea::placeholder {
+  color: #9baac4;
+}
+
+#send {
+  background: #5275f4;
+  font-size: 17px;
+  padding: 12px 15px;
+}
+
+.footer-note {
+  text-align: center;
+  color: #8e9db8;
+  font-size: 11px;
+  margin-top: 9px;
+}
+
+.error {
+  color: #ffb4b4;
+}
+
+@media (min-width: 650px) {
+  body {
+    padding: 15px;
+  }
+
+  .app {
+    height: calc(100dvh - 30px);
+    border: 1px solid #293750;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="brand">
+    <div class="logo">✦</div>
+    <div>
+      <h1>I Chat Wood</h1>
+      <div class="status" id="status">● तैयार</div>
+    </div>
+  </div>
+
+  <button id="newChat">＋ नई चैट</button>
+</header>
+
+<main id="chat">
+  <div class="welcome" id="welcome">
+    <div class="welcome-icon">🤖</div>
+    <h2>I Chat Wood में आपका स्वागत है!</h2>
+    <p>
+      आपका AI सहायक तैयार है। सवाल पूछें, नई चीजें सीखें
+      और अपने काम में मदद पाएँ।
+    </p>
+
+    <div class="suggestions">
+      <button data-prompt="मुझे अपना परिचय दो">आप कौन हो?</button>
+      <button data-prompt="मुझे एक मजेदार कहानी सुनाओ">एक कहानी सुनाओ</button>
+      <button data-prompt="मुझे विज्ञान के बारे में कुछ रोचक बताओ">कुछ नया सिखाओ</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="input-box">
+    <textarea
+      id="prompt"
+      rows="1"
+      placeholder="I Chat Wood से कुछ पूछें..."
+      aria-label="अपना सवाल लिखें"
+    ></textarea>
+
+    <button id="send" aria-label="मैसेज भेजें">➤</button>
+  </div>
+
+  <div class="footer-note">
+    I Chat Wood AI के जवाबों में गलती हो सकती है।
+  </div>
+</footer>
+
+</div>
+
+<script>
+"use strict";
+
+/*
+  अपनी Gemini API Key यहाँ डालें।
+  सार्वजनिक वेबसाइट पर API Key को HTML में न रखें।
+*/
+const API_KEY = "YAHAN_APNI_GEMINI_API_KEY_DALO";
+
+/* मॉडल उपलब्ध न हो तो AI Studio में उपलब्ध मॉडल चुनें। */
+const MODEL = "gemini-2.5-flash";
+
+const chat = document.getElementById("chat");
+const promptBox = document.getElementById("prompt");
+const sendButton = document.getElementById("send");
+const statusBox = document.getElementById("status");
+const newChatButton = document.getElementById("newChat");
+
+let history = [];
+let busy = false;
+
+function scrollToBottom() {
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function showWelcome() {
+  chat.innerHTML = "";
+
+  const welcome = document.createElement("div");
+  welcome.className = "welcome";
+
+  const icon = document.createElement("div");
+  icon.className = "welcome-icon";
+  icon.textContent = "🤖";
+
+  const heading = document.createElement("h2");
+  heading.textContent = "I Chat Wood में आपका स्वागत है!";
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent =
+    "आपका AI सहायक तैयार है। कोई भी सवाल पूछकर शुरुआत करें।";
+
+  const suggestions = document.createElement("div");
+  suggestions.className = "suggestions";
+
+  [
+    ["आप कौन हो?", "मुझे अपना परिचय दो"],
+    ["एक कहानी सुनाओ", "मुझे एक मजेदार कहानी सुनाओ"],
+    ["कुछ नया सिखाओ", "मुझे विज्ञान के बारे में कुछ रोचक बताओ"]
+  ].forEach(([label, value]) => {
+    const button = document.createElement("button");
+    button.textContent = label;
+    button.dataset.prompt = value;
+    suggestions.appendChild(button);
+  });
+
+  welcome.append(icon, heading, paragraph, suggestions);
+  chat.appendChild(welcome);
+}
+
+function addMessage(text, type, options = {}) {
+  const box = document.createElement("div");
+  box.className = "message " + type;
+
+  const label = document.createElement("div");
+  label.className = "message-label";
+  label.textContent = type === "user" ? "आप" : "✦ I Chat Wood";
+
+  const content = document.createElement("div");
+  content.className = "message-text";
+  content.textContent = text;
+
+  box.append(label, content);
+
+  if (options.copy) {
+    const copy = document.createElement("button");
+    copy.className = "copy-btn";
+    copy.textContent = "📋 कॉपी करें";
+
+    copy.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(content.textContent);
+        copy.textContent = "कॉपी हो गया ✓";
+      } catch {
+        copy.textContent = "कॉपी नहीं हो पाया";
+      }
+    });
+
+    box.appendChild(copy);
+  }
+
+  chat.appendChild(box);
+  scrollToBottom();
+
+  return { box, content };
+}
+
+async function sendMessage() {
+  const message = promptBox.value.trim();
+
+  if (!message || busy) return;
+
+  if (!API_KEY || API_KEY === "YAHAN_APNI_GEMINI_API_KEY_DALO") {
+    alert(
+      "पहले HTML कोड में अपनी Gemini API Key डालें।"
+    );
+    return;
+  }
+
+  busy = true;
+  sendButton.disabled = true;
+  newChatButton.disabled = true;
+
+  const welcome = chat.querySelector(".welcome");
+  if (welcome) welcome.remove();
+
+  addMessage(message, "user");
+
+  promptBox.value = "";
+  promptBox.style.height = "auto";
+
+  const pending = addMessage("जवाब तैयार हो रहा है...", "ai");
+  statusBox.textContent = "● सोच रहा हूँ...";
+
+  const requestHistory = [
+    ...history,
+    {
+      role: "user",
+      parts: [{ text: message }]
+    }
+  ];
+
+  try {
+    const url =
+      "https://generativelanguage.googleapis.com/v1beta/models/" +
+      encodeURIComponent(MODEL) +
+      ":generateContent?key=" +
+      encodeURIComponent(API_KEY);
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        systemInstruction: {
+          parts: [{
+            text:
+              "तुम I Chat Wood नाम के AI सहायक हो। " +
+              "उपयोगकर्ता की बात ध्यान से समझो। " +
+              "जहाँ उचित हो, सरल हिंदी में स्पष्ट और उपयोगी जवाब दो।"
+          }]
+        },
+        contents: requestHistory,
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 2048
+        }
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.error?.message || "API अनुरोध असफल हुआ।"
+      );
+    }
+
+    const answer = (
+      data.candidates?.[0]?.content?.parts || []
+    )
+      .map(part => part.text || "")
+      .join("")
+      .trim();
+
+    if (!answer) {
+      throw new Error(
+        "AI से जवाब नहीं मिला। कृपया दोबारा कोशिश करें।"
+      );
+    }
+
+    pending.content.textContent = answer;
+
+    const copy = document.createElement("button");
+    copy.className = "copy-btn";
+    copy.textContent = "📋 कॉपी करें";
+
+    copy.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(answer);
+        copy.textContent = "कॉपी हो गया ✓";
+      } catch {
+        copy.textContent = "कॉपी नहीं हो पाया";
+      }
+    });
+
+    pending.box.appendChild(copy);
+
+    history.push(
+      { role: "user", parts: [{ text: message }] },
+      { role: "model", parts: [{ text: answer }] }
+    );
+
+    statusBox.textContent = "● तैयार";
+
+  } catch (error) {
+    pending.content.textContent =
+      "जवाब नहीं मिल पाया।\n\n" +
+      "कारण: " + error.message +
+      "\n\nइंटरनेट, API Key और मॉडल की उपलब्धता जाँचें।";
+
+    pending.content.classList.add("error");
+    statusBox.textContent = "● कनेक्शन में समस्या";
+
+  } finally {
+    busy = false;
+    sendButton.disabled = false;
+    newChatButton.disabled = false;
+    promptBox.focus();
+    scrollToBottom();
+  }
+}
+
+sendButton.addEventListener("click", sendMessage);
+
+promptBox.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+
+promptBox.addEventListener("input", () => {
+  promptBox.style.height = "auto";
+  promptBox.style.height =
+    Math.min(promptBox.scrollHeight, 140) + "px";
+});
+
+chat.addEventListener("click", event => {
+  const button = event.target.closest("[data-prompt]");
+  if (!button || busy) return;
+
+  promptBox.value = button.dataset.prompt;
+  sendMessage();
+});
+
+newChatButton.addEventListener("click", () => {
+  if (busy) return;
+
+  history = [];
+  showWelcome();
+
+  statusBox.textContent = "● नई चैट तैयार";
+  promptBox.value = "";
+  promptBox.focus();
+});
+</script>
+
+</body>
+</html>
